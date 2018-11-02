@@ -1,4 +1,5 @@
-var net = require('net');
+const net = require('net');
+const fetch = require('node-fetch');
 
 function checkConnection(host, port, timeout) {
     return new Promise(function(resolve, reject) {

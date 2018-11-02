@@ -1,8 +1,9 @@
 const http = require('http');
 const net = require('net');
 const url = require('url');
+const util = require('./util');
 
-const availablePorts = [5000, 5001, 5002];
+const availablePorts = util.getPorts();
 
 // Tunnel proxy server
 const proxy = http.createServer((req, res) => {
@@ -10,7 +11,12 @@ const proxy = http.createServer((req, res) => {
     let err, forwardReq, options;
 
     const index = Math.floor(Math.random() * availablePorts.length);
+    const client = net.createConnection({ port: toPort });
 
+    client.pipe(socket);
+    socket.pipe(client);
+
+    
     options = {
       port: availablePorts[index],
       hostname: '127.0.0.1',

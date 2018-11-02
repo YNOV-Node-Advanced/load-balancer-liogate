@@ -1,7 +1,18 @@
 const http = require('http');
+const util = require('./util');
+const redis = require("redis");
+const { promisify } = require('util');
+client = redis.createClient();
 
-var args = process.argv.slice(2);
-const ports = args[0].split(',');
+const get = promisify(client.get).bind(client);
+const set = promisify(client.set).bind(client);
+
+set('rooms', 'wow');
+get('rooms').then(test => {
+  console.log(test);
+});
+
+const port = util.getPort();
 
 function run (port) {
   const server = http.createServer((req, res) => {
@@ -12,7 +23,7 @@ function run (port) {
   });
   server.listen(parseInt(port), '127.0.0.1');
 }
-ports.forEach(port => {
-  run(port);
-})
-console.log("Listening on ports "+args[0]);
+
+run(port);
+
+console.log("Listening on port "+port);

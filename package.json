@@ -4,8 +4,11 @@
   "description": "Realtime drawing application",
   "main": "reverse-proxy.js",
   "scripts": {
-    "test": "main.test.js"
+    "test": "node main.test.js"
   },
   "author": "Etienne Fachaux",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "redis": "^2.8.0"
+  }
 }
